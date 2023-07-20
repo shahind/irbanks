@@ -138,6 +138,10 @@ try{
     $AP = new \IRbanks\Asanpardakht($merchantId, $username, $password, $aesKey, $aesIV);
     $optional_REQUEST_parameter = Request::input('ReturningParams'); //This is an optional parameter, if not set, the $_POST will be used
     $response = $AP->verify($optional_REQUEST_parameter);
+
+    // OR
+    $response = $AP->verify();
+    
     update_your_payment_with($response->reference_id,$response->order_id,$response->card_number,$response->asanpardakht_transaction_id);
     echo "successful payment";
 }catch(\Throwable $e){
