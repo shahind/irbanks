@@ -17,7 +17,7 @@ about the process of your bank. Then refer to your bank section in this document
 ### Mellat
 Mellat payment has 3 main steps; getting the payment toke, verifying the payment, and settling the payment.
 
-#### Get payment token
+#### 1. Get payment token
 ```
 try{
     $mellat = new \IRbanks\Mellat\Mellat($terminalId, $userName, $userPassword);
@@ -26,9 +26,23 @@ try{
     echo "error: ".$e->getMessage();
 }
 ```
-#### Redirect user to payment page
+
+#### 2. Redirect user to payment page
 ```
 //use $response info like token($response->token) and orderId($response->order_id) to create a HTML form with POST method
 //or automatically do it using redirectToMellat() function
     $response->redirectToMellat();
+```
+
+#### 3. Verify payment
+```
+try{
+    $mellat = new \IRbanks\Mellat\Mellat($terminalId, $userName, $userPassword);
+    $response = $mellat->verify();
+    
+    //successful payment. save $response info like reference id($response->reference_id)
+    echo "successful payment";
+}catch(\Throwable $e){
+    echo "error: ".$e->getMessage();
+}
 ```
