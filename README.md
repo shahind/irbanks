@@ -32,6 +32,8 @@ try{
 //use $response info like token($response->token) and orderId($response->order_id) to create a HTML form with POST method
 //or automatically do it using redirectToMellat() function
     $response->redirectToMellat();
+
+//This function generates a JS script which creates a hidden HTML form with POST method to redirect the end-user to the Mellat payment page.
 ```
 
 #### 3. Verify payment
@@ -124,8 +126,10 @@ try{
 #### 2. Redirect user to payment page
 ```php
 //use $response info like token($response->token) and refId($response->refID) to create a HTML form with POST method
-//or automatically do it using redirectToAsanpardakht() function
+//or automatically do it using redirectToAsanpardakht() function.
     $response->redirectToAsanpardakht();
+
+//This function generates a JS script which creates a hidden HTML form with POST method to redirect the end-user to the Asanpardakht payment page.
 ```
 
 #### 3. Verify payment
