@@ -7,7 +7,7 @@ This library provides a simple and easy way to accept payments using Iranian ban
 ## Installation
 simply install IRbanks using composer:
 ```
-composer install shahinsoft/IRbanks
+composer require shahinsoft/irbanks
 ```
 
 ## How to use?
