@@ -1,0 +1,53 @@
+{
+    "name": "shahinsoft/irbanks",
+    "description": "Iranian banks payment gateways interface",
+    "keywords": [
+        "shahinsoft",
+        "iranian banks",
+		"mellat",
+		"melli",
+		"parsian",
+		"sadad",
+		"saman",
+		"pasargad",
+		"zarinpal",
+		"pay.ir",
+		"asan pardakht",
+		"iran kish"
+    ],
+    "homepage": "https://github.com/sdarvish/irbanks",
+    "license": "MIT",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Shahin Darvishpoor",
+            "email": "mail@shahinsoft.ir",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": ">=7.1",
+        "ext-soap": "*"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^7.0|^9.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "IRbanks\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "IRbanks\\Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit",
+        "test-coverage": "vendor/bin/phpunit --coverage-html coverage"
+
+    },
+    "config": {
+        "sort-packages": true
+    }
+}
