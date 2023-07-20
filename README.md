@@ -82,9 +82,9 @@ $parsian->redirect();
 use IRbanks\Parsian;
 
 try{
-        $parsian = new Parsian($pin);
-        $response = $parsian->verify();
-        echo "Successful payment";
+    $parsian = new Parsian($pin);
+    $response = $parsian->verify();
+    echo "Successful payment";
 }catch (\Throwable $exception){
     echo $exception->getMessage();
 }
