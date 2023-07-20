@@ -20,7 +20,7 @@ Mellat payment has 3 main steps; getting the payment toke, verifying the payment
 #### 1. Get payment token
 ```php
 try{
-    $mellat = new \IRbanks\Mellat\Mellat($terminalId, $userName, $userPassword);
+    $mellat = new \IRbanks\Mellat($terminalId, $userName, $userPassword);
     $response = $mellat->request($amount);
 }catch(\Throwable $e){
     echo "error: ".$e->getMessage();
@@ -37,12 +37,55 @@ try{
 #### 3. Verify payment
 ```php
 try{
-    $mellat = new \IRbanks\Mellat\Mellat($terminalId, $userName, $userPassword);
+    $mellat = new \IRbanks\Mellat($terminalId, $userName, $userPassword);
     $response = $mellat->verify();
     
     //successful payment. save $response info like reference id($response->reference_id)
     echo "successful payment";
 }catch(\Throwable $e){
     echo "error: ".$e->getMessage();
+}
+```
+
+### Parsian
+Parsian payment has 3 main steps; getting the payment token, redirecting user to payment page, and verifying the payment.
+
+#### 1. Get payment token
+```php
+<?php 
+use IRbanks\Parsian;
+
+try{
+    $parsian = new Parsian($pin);
+    $response = $parsian->request($amount, $callbackUrl, $orderId, $additionalData);
+}catch (\Throwable $exception){
+    echo $exception->getMessage();
+}
+```
+
+#### 2. Redirect user to the payment page
+```php
+//use payment URL ($parsian->paymentUrl()) to redirect user to the payment page with your project standards
+//or call redirect function ($parsian->redirect()) for automatic redirect using header location
+
+//manual approach
+$payment_url = $parsian->paymentUrl();
+return redirect($payment_url);
+
+//automatic approach
+$parsian->redirect();
+```
+
+#### 3. Verify payment
+```php
+<?php
+use IRbanks\Parsian;
+
+try{
+        $parsian = new Parsian($pin);
+        $response = $parsian->verify();
+        echo "Successful payment";
+}catch (\Throwable $exception){
+    echo $exception->getMessage();
 }
 ```
