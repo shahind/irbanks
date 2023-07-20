@@ -146,12 +146,11 @@ class Parsian
             throw new ParsianException($status);
         }
 
-        return array(
-            'token' => $token,
-            'order_id' => $_POST["OrderId"],
-            'RRN' => $RRN,
-            'hash_card_number' => $_POST["HashCardNumber"],
-        );
+        $res->token = $token;
+        $res->order_id = $_POST["OrderId"];
+        $res->RNN = $RRN;
+        $res->hash_card_number = $_POST["HashCardNumber"];
+        return $res;
     }
 
     /**
@@ -202,6 +201,13 @@ class Parsian
         return $this;
     }
 
+    /**
+     * Generate a unique number
+     * 
+     * It will be used in case there is no payment id
+     * 
+     * @return int
+     */
     public function uniqueNumber()
     {
         return hexdec(uniqid());

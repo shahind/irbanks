@@ -39,16 +39,17 @@ try{
 try{
     $mellat = new \IRbanks\Mellat($terminalId, $userName, $userPassword);
     $response = $mellat->verify();
-    
-    //successful payment. save $response info like reference id($response->reference_id)
+    update_your_payment_with($response->reference_id,$response->order_id,$response->card_number);
     echo "successful payment";
 }catch(\Throwable $e){
+    //payment was unsuccessful or verification failed
     echo "error: ".$e->getMessage();
 }
 ```
 
 ### Parsian
 Parsian payment has 3 main steps; getting the payment token, redirecting user to payment page, and verifying the payment.
+There is a possibility to reverse a transaction as well.
 
 #### 1. Get payment token
 ```php
@@ -84,7 +85,24 @@ use IRbanks\Parsian;
 try{
     $parsian = new Parsian($pin);
     $response = $parsian->verify();
+    update_your_payment_with($response->token,$response->order_id,$response->RNN,$response->hash_card_number);
     echo "Successful payment";
+}catch (\Throwable $exception){
+    //payment was unsuccessful or verification failed
+    echo $exception->getMessage();
+}
+```
+
+#### 4. Reversing a transaction
+In case you do not verify a transaction you can reverse it.
+```php
+<?php
+use IRbanks\Parsian;
+
+try{
+    $parsian = new Parsian($pin);
+    $parsian->reverse($token);
+    echo "Transaction reversed successfully";
 }catch (\Throwable $exception){
     echo $exception->getMessage();
 }
