@@ -1,2 +1,34 @@
-# irbanks
-Iranian banks payment gateway
+# IRbanks
+Iranian banks payment gateways Interface
+
+## Introduction
+This library provides a simple and easy way to accept payments using Iranian banks with PHP.
+
+## Installation
+simply install IRbanks using composer:
+```
+composer install shahinsoft/IRbanks
+```
+
+## How to use?
+Each bank has its own payment process, end-points, and parameters. First of all you need to know
+about the process of your bank. Then refer to your bank section in this document.
+
+### Mellat
+Mellat payment has 3 main steps; getting the payment toke, verifying the payment, and settling the payment.
+
+#### Get payment token
+```
+try{
+    $mellat = new \IRbanks\Mellat\Mellat($terminalId, $userName, $userPassword);
+    $response = $mellat->request($amount);
+}catch(\Throwable $e){
+    echo "error: ".$e->getMessage();
+}
+```
+#### Redirect user to payment page
+```
+//use $response info like token($response->token) and orderId($response->order_id) to create a HTML form with POST method
+//or automatically do it using redirectToMellat() function
+    $response->redirectToMellat();
+```
