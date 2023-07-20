@@ -107,3 +107,37 @@ try{
     echo $exception->getMessage();
 }
 ```
+
+### Asan Pardakht
+Asan Pardakht payment has 3 main steps; getting the payment toke, verifying the payment, and settling the payment.
+
+#### 1. Get payment token
+```php
+try{
+    $AP = new \IRbanks\Asanpardakht($merchantId, $username, $password, $aesKey, $aesIV);
+    $response = $AP->request($amount, $callback_url, $order_id);
+}catch(\Throwable $e){
+    echo "error: ".$e->getMessage();
+}
+```
+
+#### 2. Redirect user to payment page
+```php
+//use $response info like token($response->token) and refId($response->refID) to create a HTML form with POST method
+//or automatically do it using redirectToAsanpardakht() function
+    $response->redirectToAsanpardakht();
+```
+
+#### 3. Verify payment
+```php
+try{
+    $AP = new \IRbanks\Asanpardakht($merchantId, $username, $password, $aesKey, $aesIV);
+    $optional_REQUEST_parameter = Request::input('ReturningParams'); //This is an optional parameter, if not set, the $_POST will be used
+    $response = $AP->verify($optional_REQUEST_parameter);
+    update_your_payment_with($response->reference_id,$response->order_id,$response->card_number,$response->asanpardakht_transaction_id);
+    echo "successful payment";
+}catch(\Throwable $e){
+    //payment was unsuccessful or verification failed
+    echo "error: ".$e->getMessage();
+}
+```
