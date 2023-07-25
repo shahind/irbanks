@@ -51,7 +51,7 @@ try{
 
 ### Parsian
 Parsian payment has 3 main steps; getting the payment token, redirecting user to payment page, and verifying the payment.
-There is a possibility to reverse a transaction as well.
+There is a possibility to reverse a transaction as well. (Last test: 25 July 2023)
 
 #### 1. Get payment token
 ```php
