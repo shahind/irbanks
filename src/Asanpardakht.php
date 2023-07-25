@@ -151,6 +151,7 @@ class Asanpardakht
             throw new AsanpardakhtException((int)$responseCode);
         }else{
             $this->token = substr($response, 2);
+            $res = new \stdClass();
             $res->refId = substr($response, 2);
             return $res;
         }
@@ -260,6 +261,7 @@ JS;
                 $response = $response->RequestReconciliationResult;
                 
                 if ($response == '600') {
+                    $res = new \stdClass();
                     $res->reference_id                = $refId;
                     $res->card_number                 = $lastFourDigitOfPAN;
                     $res->order_id                    = $orderId;

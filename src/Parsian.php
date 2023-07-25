@@ -80,6 +80,7 @@ class Parsian
 
             if ($token > 0 and $status === 0) {
                 $this->token = $token;
+                $res = new \stdClass();
                 $res->token = $token;
                 $res->order_id = orderId;
                 return $res;
@@ -146,6 +147,7 @@ class Parsian
             throw new ParsianException($status);
         }
 
+        $res = new \stdClass();
         $res->token = $token;
         $res->order_id = $_POST["OrderId"];
         $res->RNN = $RRN;

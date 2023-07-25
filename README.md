@@ -141,6 +141,47 @@ try{
 
     // OR
     $response = $AP->verify();
+
+    update_your_payment_with($response->reference_id,$response->order_id,$response->card_number,$response->asanpardakht_transaction_id);
+    echo "successful payment";
+}catch(\Throwable $e){
+    //payment was unsuccessful or verification failed
+    echo "error: ".$e->getMessage();
+}
+```
+
+### Sadad (Bank Melli)
+Sadad payment has 3 main steps; getting the payment toke, redirecting user to payment page, and verifying the payment.
+
+#### 1. Get payment token
+Note: Your callback url should contain order_id cause Sadad does not return it to call back url.
+```php
+try{
+    $Sadad = new \IRbanks\Sadad($terminalId, $merchant, $transactionKey);
+    $response = $Sadad->request($amount, $callback_url, $order_id);
+}catch(\Throwable $e){
+    echo "error: ".$e->getMessage();
+}
+```
+
+#### 2. Redirect user to payment page
+```php
+//use $response info like token($response->token) and refId($response->refID) to create a HTML form with POST method
+//or automatically do it using redirectToAsanpardakht() function.
+    $response->redirectToAsanpardakht();
+
+//This function generates a JS script which creates a hidden HTML form with POST method to redirect the end-user to the Asanpardakht payment page.
+```
+
+#### 3. Verify payment
+```php
+try{
+    $AP = new \IRbanks\Asanpardakht($merchantId, $username, $password, $aesKey, $aesIV);
+    $optional_REQUEST_parameter = Request::input('ReturningParams'); //This is an optional parameter, if not set, the $_POST will be used
+    $response = $AP->verify($optional_REQUEST_parameter);
+
+    // OR
+    $response = $AP->verify();
     
     update_your_payment_with($response->reference_id,$response->order_id,$response->card_number,$response->asanpardakht_transaction_id);
     echo "successful payment";

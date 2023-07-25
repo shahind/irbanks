@@ -134,6 +134,7 @@ class Mellat
 
         if ($response[0] == 0) {
             $this->token   = $response[1];
+            $res = new \stdClass();
             $res->order_id = $payParam['orderId'];
             $res->token    = $response[1];
             return $res;
@@ -206,12 +207,12 @@ JS;
     {
         $data = $postData ? $postData : $_POST;
 
-        $RefId = $data['RefId'] ?? null;
-        $ResCode = intval($data['ResCode'] ?? null);
+        $refId = $data['RefId'] ?? null;
+        $resCode = intval($data['ResCode'] ?? null);
         $saleOrderId = intval($data['SaleOrderId'] ?? null);
-        $SaleReferenceId = $data['SaleReferenceId'] ?? null;
+        $saleReferenceId = $data['SaleReferenceId'] ?? null;
 
-        if ($ResCode == 0) {
+        if ($resCode == 0) {
 
             $parameters = [
                 'terminalId' => $this->terminalId,
@@ -219,7 +220,7 @@ JS;
                 'userPassword' => $this->userPassword,
                 'orderId' => $saleOrderId,
                 'saleOrderId' => $saleOrderId,
-                'saleReferenceId' => $SaleReferenceId,
+                'saleReferenceId' => $saleReferenceId,
             ];
 
             $client = $this->getSoapClient();
@@ -231,7 +232,8 @@ JS;
                 $result = $client->bpSettleRequest($parameters, self::NAMESPACE);
                 $response = $this->getResponse($result);
                 if ($response[0] == 0) {
-                    $res->reference_id = $RefId;
+                    $res = new \stdClass();
+                    $res->reference_id = $refId;
                     $res->card_number  = null;
                     $res->order_id     = $saleOrderId;
                     return $res;
@@ -242,7 +244,7 @@ JS;
                 throw new MellatException($response[0]);
             }
         } else {
-            throw new MellatException($ResCode);
+            throw new MellatException($resCode);
         }
     }
 
